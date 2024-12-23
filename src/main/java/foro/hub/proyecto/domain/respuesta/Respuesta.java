@@ -1,7 +1,7 @@
-package foro.hub.proyecto.domain.respuesta.model;
+package foro.hub.proyecto.domain.respuesta;
 
-import foro.hub.proyecto.domain.topico.model.Topico;
-import foro.hub.proyecto.domain.usuario.model.Usuario;
+import foro.hub.proyecto.domain.topico.Topico;
+import foro.hub.proyecto.domain.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,4 +27,5 @@ public class Respuesta {
     @JoinColumn(name = "autor")
     private Usuario autor;
     private Boolean solucion;
+
 }

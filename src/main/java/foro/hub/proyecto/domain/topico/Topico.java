@@ -1,11 +1,13 @@
-package foro.hub.proyecto.domain.topico.model;
+package foro.hub.proyecto.domain.topico;
 
-import foro.hub.proyecto.domain.curso.model.Curso;
-import foro.hub.proyecto.domain.usuario.model.Usuario;
+import foro.hub.proyecto.domain.curso.Curso;
+import foro.hub.proyecto.domain.topico.data.ActualizarTopico;
+import foro.hub.proyecto.domain.topico.data.DatosTopico;
+import foro.hub.proyecto.domain.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -20,7 +22,7 @@ public class Topico {
     private Long id;
     private String titulo;
     private String mensaje;
-    private LocalDate fechaCreacion;
+    private LocalDateTime fechaCreacion;
     private Boolean status;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "autor")
@@ -29,4 +31,13 @@ public class Topico {
     @JoinColumn(name = "curso")
     private Curso curso;
     private Integer respuestas;
+
+    public void actualizarDatosTopico(ActualizarTopico actualizarTopico) {
+        this.titulo = actualizarTopico.titulo();
+        this.mensaje = actualizarTopico.mensaje();
+    }
+
+    public void solucionadoTopico() {
+        this.status = true;
+    }
 }

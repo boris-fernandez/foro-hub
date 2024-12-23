@@ -1,4 +1,4 @@
-package foro.hub.proyecto.domain.usuario.model;
+package foro.hub.proyecto.domain.curso;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,14 +7,14 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "usuario")
-@Table(name = "usuarios")
+@Entity(name = "curso")
+@Table(name = "cursos")
 @EqualsAndHashCode(of = "id")
-public class Usuario {
+public class Curso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     private String nombre;
-    private String correo;
-    private String cotrasena;
+    @Enumerated(EnumType.STRING)
+    private Categoria categoria;
 }
