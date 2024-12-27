@@ -1,7 +1,11 @@
 # Foro Hub - API REST  
 
-![Portada del Proyecto](ruta/a/tu/imagen.png)  
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/fc987345-5059-45a7-aa38-c382dbc6b2a0" alt="Badge-Spring" />
+</p>
 
+
+---
 ## Índice  
 1. [Título e imagen de portada](#foro-hub---api-rest)  
 2. [Insignias](#Insignias)  
