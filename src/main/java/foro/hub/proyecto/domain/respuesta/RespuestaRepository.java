@@ -19,4 +19,10 @@ public interface RespuestaRepository extends JpaRepository<Respuesta, Long> {
             """)
     Long buscarTopicoPorId(Long id);
 
+    @Query("""
+            select count(r.id)
+            from Respuesta r
+            where r.topico.id = :id
+            """)
+    int cantidadDeRespuestasEnUnTopico(Long id);
 }

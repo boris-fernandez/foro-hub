@@ -8,7 +8,6 @@ import foro.hub.proyecto.domain.topico.validations.ValidadorDeRegistroTopico;
 import foro.hub.proyecto.domain.usuario.Usuario;
 import foro.hub.proyecto.domain.usuario.UsuarioRepository;
 import foro.hub.proyecto.domain.usuario.perfil.Rol;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,16 +21,12 @@ import java.util.Optional;
 @Service
 public class TopicoService {
 
-    @Autowired
     private final CursoRepository cursoRepository;
 
-    @Autowired
     private final TopicoRepository topicoRepository;
 
-    @Autowired
     private final UsuarioRepository usuarioRepository;
 
-    @Autowired
     private List<ValidadorDeRegistroTopico> validadorDeDuplicados;
 
 
