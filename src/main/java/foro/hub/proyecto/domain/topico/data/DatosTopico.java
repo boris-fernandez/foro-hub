@@ -14,7 +14,8 @@ public record DatosTopico(
         Integer respuestas) {
 
     public DatosTopico(Topico topico) {
-        this(topico.getTitulo(), topico.getMensaje(), topico.getFechaCreacion(), topico.getStatus(), new DatosCurso(
-                topico.getCurso().getNombre(), topico.getCurso().getCategoria()), topico.getRespuestas());
+        this(topico.getTitulo(), topico.getMensaje(), topico.getFechaCreacion(), topico.getStatus(),
+                new DatosCurso(topico.getId(), topico.getCurso().getNombre(), topico.getCurso().getCategoria()),
+                topico.getRespuestas());
     }
 }

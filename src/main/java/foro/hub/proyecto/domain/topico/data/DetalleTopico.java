@@ -11,11 +11,13 @@ public record DetalleTopico(
         LocalDateTime fechaCreacion,
         Boolean status,
         String autor,
-        DatosCurso curso) {
+        DatosCurso curso,
+        Integer respuestas) {
 
     public DetalleTopico(Topico topico) {
         this(topico.getTitulo(), topico.getMensaje(), topico.getFechaCreacion(), topico.getStatus(),
                 topico.getAutor().getNombre(),
-                new DatosCurso(topico.getCurso().getNombre(), topico.getCurso().getCategoria()));
+                new DatosCurso(topico.getId(),topico.getCurso().getNombre(), topico.getCurso().getCategoria()),
+                topico.getRespuestas());
     }
 }

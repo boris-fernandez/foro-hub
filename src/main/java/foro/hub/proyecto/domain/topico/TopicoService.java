@@ -4,15 +4,17 @@ import foro.hub.proyecto.domain.ValidacionException;
 import foro.hub.proyecto.domain.curso.Curso;
 import foro.hub.proyecto.domain.curso.CursoRepository;
 import foro.hub.proyecto.domain.topico.data.*;
-import foro.hub.proyecto.domain.topico.validations.ValidadorDeDuplicado;
+import foro.hub.proyecto.domain.topico.validations.ValidadorDeRegistroTopico;
 import foro.hub.proyecto.domain.usuario.Usuario;
 import foro.hub.proyecto.domain.usuario.UsuarioRepository;
+import foro.hub.proyecto.domain.usuario.perfil.Rol;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,15 +22,20 @@ import java.util.Optional;
 @Service
 public class TopicoService {
 
+    @Autowired
     private final CursoRepository cursoRepository;
 
+    @Autowired
     private final TopicoRepository topicoRepository;
 
+    @Autowired
     private final UsuarioRepository usuarioRepository;
 
-    private List<ValidadorDeDuplicado> validadorDeDuplicados;
+    @Autowired
+    private List<ValidadorDeRegistroTopico> validadorDeDuplicados;
 
-    public TopicoService(CursoRepository cursoRepository, TopicoRepository topicoRepository, UsuarioRepository usuarioRepository, List<ValidadorDeDuplicado> validadorDeDuplicados) {
+
+    public TopicoService(CursoRepository cursoRepository, TopicoRepository topicoRepository, UsuarioRepository usuarioRepository, List<ValidadorDeRegistroTopico> validadorDeDuplicados) {
         this.cursoRepository = cursoRepository;
         this.topicoRepository = topicoRepository;
         this.usuarioRepository = usuarioRepository;
@@ -39,9 +46,6 @@ public class TopicoService {
         if (!cursoRepository.existsById(datos.idCurso())){
             throw new ValidacionException("El curso no existe");
         }
-        if (!usuarioRepository.existsById(datos.idAutor())){
-            throw new ValidacionException("El usuario no existe");
-        }
 
         //Validaciones
         validadorDeDuplicados.forEach(v -> v.validar(datos));
@@ -50,7 +54,11 @@ public class TopicoService {
         Boolean status = false;
         Integer respuestas = 0;
         Curso curso = cursoRepository.getReferenceById(datos.idCurso());
-        Usuario autor = usuarioRepository.getReferenceById(datos.idAutor());
+
+
+
+        var usuarioAutenticado = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Usuario autor = usuarioRepository.getReferenceById(usuarioAutenticado.getId());
         Topico topico = new Topico(null, datos.titulo(), datos.mensaje(), fechaCreacion, status, autor, curso, respuestas);
 
         topicoRepository.save(topico);
@@ -92,6 +100,11 @@ public class TopicoService {
     }
 
     public void eliminarTopico(Long id){
+        var usuarioAutenticado = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(!usuarioRepository.existsByIdAndRolesNombre(usuarioAutenticado.getId(), Rol.ADMINISTRADOR)){
+            throw new ValidacionException("El usuario no tiene permisos para eliminar topico");
+        }
+
         if (!topicoRepository.existsById(id)){
             throw new ValidacionException("El topico no existe");
         }

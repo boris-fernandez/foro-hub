@@ -1,6 +1,7 @@
 package foro.hub.proyecto.controller;
 
 import foro.hub.proyecto.domain.topico.data.*;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Pageable;
 import foro.hub.proyecto.domain.topico.TopicoService;
@@ -16,6 +17,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/topicos")
+@SecurityRequirement(name = "bearer-key")
 public class TopicoController {
 
     private final TopicoService topicoService;
@@ -28,7 +30,7 @@ public class TopicoController {
     @PostMapping
     public ResponseEntity<RespuestaTopico> registroTopico(@RequestBody @Valid RegistroTopico datos, UriComponentsBuilder uriBuilder) {
         RespuestaTopico topico = topicoService.registro(datos);
-        URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.id()).toUri();
+        URI uri = uriBuilder.path("/topicos/{idAdmin}").buildAndExpand(topico.id()).toUri();
         return ResponseEntity.created(uri).body(topico);
     }
 
@@ -42,10 +44,9 @@ public class TopicoController {
     //Listar Topicos por Curso
     @GetMapping("/curso/{nombreCurso}")
     public ResponseEntity<Page<DatosTopico>> listarTopicosPorCurso(@PageableDefault(size = 5,sort = "fechaCreacion", direction = Sort.Direction.ASC)
-                                                                    Pageable paginacion,@PathVariable String nombreCurso){
+                                                                         Pageable paginacion,@PathVariable String nombreCurso){
         return ResponseEntity.ok(topicoService.listadoTopicosPorCurso(nombreCurso, paginacion));
     }
-
 
     //Detalles Topico
     @GetMapping("/{id}")
@@ -63,7 +64,8 @@ public class TopicoController {
 
     //Eliminar Topico
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> eliminarTopico(@PathVariable Long id){
+    @Transactional
+    public ResponseEntity eliminarTopico(@PathVariable Long id){
         topicoService.eliminarTopico(id);
         return ResponseEntity.noContent().build();
     }

@@ -33,11 +33,11 @@ public class Topico {
     private Integer respuestas;
 
     public void actualizarDatosTopico(ActualizarTopico actualizarTopico) {
-        this.titulo = actualizarTopico.titulo();
-        this.mensaje = actualizarTopico.mensaje();
+        if (actualizarTopico.titulo() != null) this.titulo = actualizarTopico.titulo();
+        if (actualizarTopico.mensaje() != null) this.mensaje = actualizarTopico.mensaje();
     }
 
-    public void solucionadoTopico() {
-        this.status = true;
+    public void aumentarRespuestas() {
+        this.respuestas++;
     }
 }

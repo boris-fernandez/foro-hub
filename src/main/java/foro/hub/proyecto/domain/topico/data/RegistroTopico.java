@@ -10,7 +10,5 @@ public record RegistroTopico(
         @NotNull
         String mensaje,
         @NotNull
-        Long idAutor,
-        @NotNull
         Long idCurso) {
 }

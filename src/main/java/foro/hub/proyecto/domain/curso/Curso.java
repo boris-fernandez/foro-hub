@@ -1,5 +1,7 @@
 package foro.hub.proyecto.domain.curso;
 
+import foro.hub.proyecto.domain.curso.data.ActualizarCurso;
+import foro.hub.proyecto.domain.curso.data.RegistrarCurso;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,4 +19,14 @@ public class Curso {
     private String nombre;
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
+
+    public Curso(RegistrarCurso registrarCurso) {
+        this.nombre = registrarCurso.nombre();
+        this.categoria = registrarCurso.categoria();
+    }
+
+    public final void actualizar(ActualizarCurso actualizarCurso) {
+        if (actualizarCurso.nombre() != null) this.nombre = actualizarCurso.nombre();
+        if (actualizarCurso.categoria() != null) this.categoria = actualizarCurso.categoria();
+    }
 }

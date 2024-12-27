@@ -1,5 +1,6 @@
 package foro.hub.proyecto.domain.respuesta;
 
+import foro.hub.proyecto.domain.respuesta.data.ActualizarRespuesta;
 import foro.hub.proyecto.domain.topico.Topico;
 import foro.hub.proyecto.domain.usuario.Usuario;
 import jakarta.persistence.*;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "respuesta")
+@Entity
 @Table(name = "respuestas")
 @EqualsAndHashCode(of = "id")
 public class Respuesta {
@@ -27,5 +28,6 @@ public class Respuesta {
     @JoinColumn(name = "autor")
     private Usuario autor;
     private Boolean solucion;
+
 
 }

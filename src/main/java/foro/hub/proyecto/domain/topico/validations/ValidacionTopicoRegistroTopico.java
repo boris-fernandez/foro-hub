@@ -6,11 +6,11 @@ import foro.hub.proyecto.domain.topico.data.RegistroTopico;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ValidacionTopicoDuplicado implements ValidadorDeDuplicado {
+public class ValidacionTopicoRegistroTopico implements ValidadorDeRegistroTopico {
 
     private TopicoRepository topicoRepository;
 
-    public ValidacionTopicoDuplicado(TopicoRepository topicoRepository) {
+    public ValidacionTopicoRegistroTopico(TopicoRepository topicoRepository) {
         this.topicoRepository = topicoRepository;
     }
 

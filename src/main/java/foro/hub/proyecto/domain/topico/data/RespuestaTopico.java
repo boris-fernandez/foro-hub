@@ -18,7 +18,7 @@ public record RespuestaTopico(
     public RespuestaTopico(Topico topico) {
         this(topico.getId(), topico.getTitulo(), topico.getMensaje(), topico.getFechaCreacion(), topico.getStatus(),
                 topico.getAutor().getNombre(),
-                new DatosCurso(topico.getCurso().getNombre(), topico.getCurso().getCategoria()),
+                new DatosCurso(topico.getId(),topico.getCurso().getNombre(), topico.getCurso().getCategoria()),
                 topico.getRespuestas());
     }
 }
